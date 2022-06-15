@@ -1,0 +1,48 @@
+﻿@model Mudek.Models.Teacher
+
+
+<div class="sidebar-section sidebar-user my-1">
+    <div class="sidebar-section-body">
+        <div class="media">
+            <a href="#" class="mr-3 icon-library2 mt-2">
+            </a>
+
+            <div class="media-body">
+                <div class="font-weight-semibold">Merhaba</div>
+                <div class="font-size-sm line-height-sm opacity-50">
+                    @Model.FirstName @Model.LastName
+                </div>
+            </div>
+
+            <div class="ml-3 align-self-center">
+                <button type="button" class="btn btn-outline-light-100 text-white border-transparent btn-icon rounded-pill btn-sm sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                    <i class="icon-transmission"></i>
+                </button>
+
+                <button type="button" class="btn btn-outline-light-100 text-white border-transparent btn-icon rounded-pill btn-sm sidebar-mobile-main-toggle d-lg-none">
+                    <i class="icon-cross2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<h1>-->@*@a.DepartmentCourse.Course.Name*@<!--</h1>-->
+
+
+<div class="sidebar-section">
+    <ul class="nav nav-sidebar" data-nav-type="accordion">
+        @foreach (var departments in Model.DepartmentTeachers)
+        {
+            foreach (var courses in departments.OpenedCourses)
+            {
+                <li class="nav-item ">
+                    <a asp-action="Index" asp-controller="Teacher" asp-route-id="@courses.Id" class="nav-link">
+                        <i class="icon-copy"></i> <span>@courses.DepartmentCourse.Course.Name</span>
+                    </a>
+
+                </li>
+            }
+        }
+    </ul>
+
+</div>

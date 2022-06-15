@@ -1,0 +1,175 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Mudek.Models.Survey
+@{
+}
+
+<script src="~/selam/c3.min.js"></script>
+<script src="~/selam/c3_axis.js"></script>
+<script src="~/selam/d3v5.min.js"></script>
+
+
+@if (User.Identity.Name == "Admin Admin")
+{
+
+
+
+        <div style="padding-top: 50px" class="form-group row">
+            <div class="col-lg-1"></div>
+            <label class="col-form-label col-lg-1">Anket İsmi</label>
+            <div class="col-lg-4">
+                <input id="surveyName" class="form-control" type="text">
+            </div>
+            <div class="col-lg-1">
+                <button id="getSurveyResult" class="btn btn-success btn-float rounded-pill"><i class="icon-stats-bars2"></i></button>
+            </div>
+            
+        </div>
+}
+else
+{
+    <h1>Yetkiniz yok.</h1>
+}
+
+
+
+
+<br />
+
+<div class="pt-4 pl-4 pr-4 pb-4" id="surveyResultContent">
+
+</div>
+
+<!-- Axis tick rotation -->
+@*<div class="card pt-4 pl-4 pr-4 pb-4">
+    <div class="card-header header-elements-inline">
+        <h5 class="card-title">axis tick rotation</h5>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+                <a class="list-icons-item" data-action="reload"></a>
+                <a class="list-icons-item" data-action="remove"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="chart-container">
+            <div class="chart c3-axis-tick-rotation" id="chart"></div>
+        </div>
+    </div>
+</div>*@
+<!-- /axis tick rotation -->
+
+<script>
+    
+</script>
+
+@*<button id type="submit" class="btn btn-secondary btn-labeled btn-labeled-left rounded-pill"></button>*@
+<script>
+
+
+
+
+    $( "#getSurveyResult" ).click(function() {
+        let surveyName = document.getElementById("surveyName").value;
+        $.ajax({
+            url: "https://localhost:44372/Survey/GetColumnChart",
+            type: "get",
+            data : {
+                "surveyName" :  surveyName
+            },
+            success: function (result, status, xhr) {
+                console.log(result);
+                const resultArr = [];
+
+                // grouping by location and resulting with an object using Array.reduce() method
+                const groupByQuestion = result.reduce((group, item) => {
+                  const { question } = item;
+                  group[question] = group[question] ?? [];
+                  group[question].push(item.note);
+                  return group;
+                }, {});
+                
+                // Finally calculating the sum based on the location array we have.not
+                Object.keys(groupByQuestion).forEach((item) => {
+                    groupByQuestion[item] = groupByQuestion[item].reduce((a, b) => (+a + +b) / 2);
+                    resultArr.push({
+                        'question': item,
+                        'note': groupByQuestion[item]
+                    })
+                })
+
+                console.log(resultArr)
+                let questionArray = []
+                let noteArray = []
+                resultArr.forEach( (value, index) => {
+                    questionArray.push(resultArr[index].question)
+                    noteArray.push(resultArr[index].note)
+                })
+
+                    let columnBarChart = 
+                        "<div class=\"card\">" +
+                          "<div class=\"card-header header-elements-inline\">" +
+                              "<h5 class=\"card-title\"><strong>" + surveyName + " Anket Sonuçları"+ "</strong></h5>" +
+                                  "<div class=\"header-elements\">" +
+                                      "<div class=\"list-icons\">" +
+                                          //"<a class=\"list-icons-item\" data-action=\"collapse\"></a>" +
+                                          //"<a class=\"list-icons-item\" data-action=\"reload\"></a>" +
+                                          //"<a class=\"list-icons-item\" data-action=\"remove\"></a>" +
+                                      "</div>" +
+                                  "</div>" +
+                          "</div>" +
+                          "<div class=\"card-body\">" +
+                              "<div class=\"chart-container\">" + 
+                                 "<div class=\"chart c3-axis-tick-rotation\" id=\"chart\"></div>" +
+                              "</div>" +
+                          "</div>" +
+                        "</div>";
+               $('#surveyResultContent').html(columnBarChart)
+               //console.log(result)
+
+
+               let chartJson = {
+                              data: {
+                                  x : 'x',
+                                  columns: [
+                                      ['x',...questionArray ],
+                                      ['Ortalama', ...noteArray]
+                                  ],
+                                  type: 'bar'
+                              },
+                              axis: {
+                                  x: {
+                                      type: 'category',
+                                      tick: {
+                                          rotate: 75,
+                                          multiline: true,
+                                          multilineMax: 1,
+                                      },
+                                      height: 130
+                                  }
+                              },
+                              tooltip: {
+                                  format: {
+                                      title: function (x, index) { return 'Soru ' + (x + 1); }
+                                  }
+                              },
+                              size : {
+                                  height: 450,
+                                  width: 800
+                              }
+                           }
+               let chart = c3.generate(chartJson);
+            },
+            error: function (xhr, status, error) {
+               console.log(xhr)
+            }
+         });
+    });
+
+</script>

@@ -1,0 +1,188 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+    .stars-outer {
+        position: relative;
+        display: inline-block;
+    }
+
+    .stars-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+    }
+
+    .stars-outer::before {
+        content: "\f005 \f005 \f005 \f005 \f005";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        color: #ccc;
+    }
+
+    .stars-inner::before {
+        content: "\f005 \f005 \f005 \f005 \f005";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        color: #f8ce0b;
+    }
+
+</style>
+
+@if (User.Identity.Name == "Admin Admin")
+{
+
+
+
+        <div style="padding-top: 50px" class="form-group row">
+            <div class="col-lg-1"></div>
+            <label class="col-form-label col-lg-1">Anket İsmi</label>
+            <div class="col-lg-4">
+                <input id="surveyName" class="form-control" type="text">
+            </div>
+            <div class="col-lg-1">
+                <button id="getSurveyResult" class="btn btn-success btn-float rounded-pill"><i class="icon-stats-bars2"></i></button>
+            </div>
+            
+        </div>
+}
+else
+{
+    <h1>Yetkiniz yok.</h1>
+}
+
+<div id="resultContainer">
+
+</div>
+
+
+
+
+<script>
+   
+
+
+
+      $( "#getSurveyResult" ).click(function() {
+        let surveyName = document.getElementById("surveyName").value;
+        $.ajax({
+            url: "https://localhost:44372/Survey/GetColumnChart",
+            type: "get",
+            data : {
+                "surveyName" :  surveyName
+            },
+            success: function (result, status, xhr) {
+                //console.log(result);
+                const resultArr = [];
+
+                // grouping by location and resulting with an object using Array.reduce() method
+                const groupByQuestion = result.reduce((group, item) => {
+                  const { question } = item;
+                  group[question] = group[question] ?? [];
+                  group[question].push(item.note);
+                  return group;
+                }, {});
+                
+                // Finally calculating the sum based on the location array we have.not
+                Object.keys(groupByQuestion).forEach((item) => {
+                    groupByQuestion[item] = groupByQuestion[item].reduce((a, b) => (+a + +b) / 2);
+                    resultArr.push({
+                        'question': item,
+                        'note': groupByQuestion[item]
+                    })
+                })
+                //console.log(resultArr)
+                let questionArray = []
+                let noteArray = []
+                resultArr.forEach( (value, index) => {
+                    questionArray.push(resultArr[index].question)
+                    noteArray.push(resultArr[index].note)
+                })
+
+                //console.log(questionArray)
+                console.log(noteArray)
+
+                let columnBarChart = ""
+                let starsTotal = noteArray.length ;
+
+                let mainBody =
+                    "<div class=\"card mt-5 ml-5 mb-5 mr-5\">" +
+                        "<div id=\"surveyTitle\" class=\"card-header header-elements-inline\">" +
+                    "</div>" +
+                    "<table class=\"table datatable-reorder\">" +
+                        "<thead>" +
+                            "<tr>" +
+                                "<th class=\"ml-4 pl-4\">Questions</th>" +
+                               "<th class=\"pr-5 mr-5\">Rating</th>" +
+                            "</tr>" +
+                        "</thead>" +
+                    "<tbody id=\"surveyResultsContainer\">" +
+
+                    "</tbody>" +
+                    "</table>" +
+                "</div>";
+                $('#resultContainer').html(mainBody)
+
+                for(let i = 0; i < noteArray.length; i++)
+                {
+                    columnBarChart +=
+                         "<tr class=\"soru"+ i +"\">" +
+                                @*<td>Etkili sözlü ve yazılı iletişim kurar, mesleğinin gerektirdiği en az bir yabancı dili(İngilizce) kullanarak bilgisayar mühendisliği ve bilimleri alanındaki bilgileri izler ve iletişim kurar</td>*@
+                                "<td><strong>" + questionArray[i] + "</strong></td>" +
+                                "<td class=\"mr-5 pr-5\" data-toggle=\"tooltip asd\" data-placement=\"right\" title=\"" + noteArray[i] + "\">" +
+                                    "<div class=\"stars-outer\">" +
+                                        "<div class=\"stars-inner\"></div>" +
+                                    "</div>" +
+                                    "<span class=\"number-rating\"></span>" +
+                                "</td>" +
+                            "</tr>";
+                    
+                }
+
+                let title = "<h5 class=\"card-title\"><strong>" + surveyName + " Anket Sonuçları. Toplamda "+ result.length / noteArray.length + " kişi katıldı. </strong></h5>";
+                
+                $('#surveyTitle').html(title)
+                
+
+
+
+                $('#surveyResultsContainer').html(columnBarChart)
+
+                    for(let i = 0; i < noteArray.length; i++)
+                    {
+                        //let starPercentage = (noteArray[i] / starsTotal) * 100;
+                        ////console.log("yüzelik = " + starPercentage)
+                        //console.log("note = " + noteArray[i])
+                        //console.log("toplam star = " + starsTotal)
+                        //console.log("bölüm sonuc = " + (noteArray[i] / starsTotal))
+                        //console.log("sonuc = " + (noteArray[i] / starsTotal) * 100)
+                        //// Round to nearest 10
+                        //let starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+                        //console.log("yüzdelik = " + starPercentageRounded)
+                        let result = noteArray[i] * 20 + "%"
+                        
+                        // Set width of stars-inner to percentage
+                        //document.querySelector(`.soru${i} .stars-inner`).style.width = starPercentageRounded;
+                        document.querySelector(`.soru${i} .stars-inner`).style.width = result;
+                        
+                        //document.querySelector(`.soru${i} .number-rating`).innerHTML = noteArray[i];
+                    }
+                     
+
+            },
+            error: function (xhr, status, error) {
+               console.log(xhr)
+            }
+         });
+    });
+
+</script>

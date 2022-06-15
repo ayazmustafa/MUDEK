@@ -1,0 +1,16 @@
+﻿@*@inject SignInManager<IdentityUser> signInManager*@
+
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="sidebar sidebar-dark sidebar-main sidebar-expand-lg">
+
+        <div class="sidebar-content">
+
+            @await Component.InvokeAsync("SideBar")
+
+        </div>
+    </div>
+}

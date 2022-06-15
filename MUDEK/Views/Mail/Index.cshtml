@@ -1,0 +1,64 @@
+﻿@model Mudek.Models.Survey
+@{
+}
+
+<script src="~/selam/c3.min.js"></script>
+<script src="~/selam/c3_axis.js"></script>
+<script src="~/selam/d3v5.min.js"></script>
+
+
+@if (User.Identity.Name == "Admin Admin")
+{
+
+
+    <form asp-action="SendMail">
+
+        <div style="padding-top: 50px" class="form-group row">
+            <div class="col-lg-1"></div>
+            <label class="col-form-label col-lg-1">Email</label>
+            <div class="col-lg-4">
+                <input asp-for="Mail" class="form-control" type="email">
+            </div>
+            <div class="col-lg-1">
+                <button type="submit" asp-action="SendGraduateMail" class="btn btn-success btn-float rounded-pill">Mezun Anket</button>
+            </div>
+            <div class="col-lg-1">
+                <button type="submit" asp-action="SendEmployerMail" class="btn btn-success btn-float rounded-pill">İşveren Anket</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-1"></div>
+            <label class="col-form-label col-lg-1">Anket İsmi</label>
+            <div class="col-lg-4">
+                <input asp-for="SurveyName" class="form-control" type="text">
+            </div>
+        </div>
+        <div style="padding-top: 20px" class="form-group row">
+            <div class="col-lg-1"></div>
+            <label class="col-form-label col-lg-1">Departman</label>
+            <div class="col-lg-4">
+                <input asp-for="Department" class="form-control" type="text">
+            </div>
+        </div>
+        <div style="padding-top: 20px" class="form-group row">
+            <div class="col-lg-1"></div>
+            <label class="col-form-label col-lg-1">Anket Tarihi</label>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <span class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-calendar5"></i></span>
+                    </span>
+                    <input asp-for="SurveyDate" type="text" class="form-control pickadate-year rounded-right picker__input" placeholder="Pick a date…" readonly="" id="P187659736" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P187659736_root"><div class="picker" id="P187659736_root" aria-hidden="true"><div class="picker__holder" tabindex="-1"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__header"><select class="picker__select--year" aria-controls="P187659736_table" title="Select a year" disabled="disabled"><option value="2019">2019</option><option value="2020">2020</option><option value="2021" selected="">2021</option><option value="2022">2022</option><option value="2023">2023</option></select><div class="picker__month">December</div><div class="picker__nav--prev" data-nav="-1" role="button" aria-controls="P187659736_table" title="Previous month"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="P187659736_table" title="Next month"> </div></div><table class="picker__table" id="P187659736_table" role="grid" aria-controls="P187659736" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">Sun</th><th class="picker__weekday" scope="col" title="Monday">Mon</th><th class="picker__weekday" scope="col" title="Tuesday">Tue</th><th class="picker__weekday" scope="col" title="Wednesday">Wed</th><th class="picker__weekday" scope="col" title="Thursday">Thu</th><th class="picker__weekday" scope="col" title="Friday">Fri</th><th class="picker__weekday" scope="col" title="Saturday">Sat</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1638046800000" role="gridcell" aria-label="28 November, 2021">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1638133200000" role="gridcell" aria-label="29 November, 2021">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1638219600000" role="gridcell" aria-label="30 November, 2021">30</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638306000000" role="gridcell" aria-label="1 December, 2021">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638392400000" role="gridcell" aria-label="2 December, 2021">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638478800000" role="gridcell" aria-label="3 December, 2021">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638565200000" role="gridcell" aria-label="4 December, 2021">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638651600000" role="gridcell" aria-label="5 December, 2021">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638738000000" role="gridcell" aria-label="6 December, 2021">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638824400000" role="gridcell" aria-label="7 December, 2021">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638910800000" role="gridcell" aria-label="8 December, 2021">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1638997200000" role="gridcell" aria-label="9 December, 2021">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639083600000" role="gridcell" aria-label="10 December, 2021">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639170000000" role="gridcell" aria-label="11 December, 2021">11</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639256400000" role="gridcell" aria-label="12 December, 2021">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639342800000" role="gridcell" aria-label="13 December, 2021">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639429200000" role="gridcell" aria-label="14 December, 2021">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639515600000" role="gridcell" aria-label="15 December, 2021">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639602000000" role="gridcell" aria-label="16 December, 2021">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639688400000" role="gridcell" aria-label="17 December, 2021">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639774800000" role="gridcell" aria-label="18 December, 2021">18</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--selected picker__day--highlighted" data-pick="1639861200000" role="gridcell" aria-label="19 December, 2021" aria-selected="true" aria-activedescendant="true">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1639947600000" role="gridcell" aria-label="20 December, 2021">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640034000000" role="gridcell" aria-label="21 December, 2021">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640120400000" role="gridcell" aria-label="22 December, 2021">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640206800000" role="gridcell" aria-label="23 December, 2021">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640293200000" role="gridcell" aria-label="24 December, 2021">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640379600000" role="gridcell" aria-label="25 December, 2021">25</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640466000000" role="gridcell" aria-label="26 December, 2021">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640552400000" role="gridcell" aria-label="27 December, 2021">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640638800000" role="gridcell" aria-label="28 December, 2021">28</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640725200000" role="gridcell" aria-label="29 December, 2021">29</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640811600000" role="gridcell" aria-label="30 December, 2021">30</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1640898000000" role="gridcell" aria-label="31 December, 2021">31</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1640984400000" role="gridcell" aria-label="1 January, 2022">1</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641070800000" role="gridcell" aria-label="2 January, 2022">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641157200000" role="gridcell" aria-label="3 January, 2022">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641243600000" role="gridcell" aria-label="4 January, 2022">4</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641330000000" role="gridcell" aria-label="5 January, 2022">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641416400000" role="gridcell" aria-label="6 January, 2022">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641502800000" role="gridcell" aria-label="7 January, 2022">7</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1641589200000" role="gridcell" aria-label="8 January, 2022">8</div></td></tr></tbody></table><div class="picker__footer"><button class="picker__button--today" type="button" data-pick="1639861200000" aria-controls="P187659736" disabled="disabled">Today</button><button class="picker__button--clear" type="button" data-clear="1" aria-controls="P187659736" disabled="disabled">Clear</button><button class="picker__button--close" type="button" data-close="true" aria-controls="P187659736" disabled="disabled">Close</button></div></div></div></div></div></div>
+                </div>
+            </div>
+        </div>
+      
+
+    </form>
+
+}
+else
+{
+    <h1>Yetkiniz yok.</h1>
+}
+

@@ -1,0 +1,182 @@
+﻿@model IEnumerable<Mudek.Models.Exam>
+
+@{
+
+}
+
+
+
+<div class="card mt-5 mb-5 ml-5 mr-5">
+	<div class="card-header">
+		<h2 class="card-title"><strong>Sınav Soruları</strong></h2>
+	</div>
+	<div class="pl-4 pt-2">
+		<form id="docForm" asp-controller="Question" asp-action="Create" method="post"
+			  enctype="multipart/form-data">
+			<div class="form-group row">
+				<label class="col-lg-2 col-form-label text-right"><strong>Attach screenshot:</strong></label>
+				<div class="col-lg-5">
+					<label class="custom-file">
+						<input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+						<span class="custom-file-label">Choose file, Accepted formats: Only docx</span>
+					</label>
+					<span class="form-text text-muted"></span>
+					<button type="submit" class="btn btn-secondary btn-labeled btn-labeled-left rounded-pill">
+						<b><i class="icon-file-upload2"></i></b>
+						Upload
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+
+
+
+	@*@if (ViewBag.AllText is not null)
+		{*@
+
+	<div class="card-body">
+		<h3 class="mb-3"><strong>Her bir paragraf bir sorudur</strong></h3>
+		<form asp-action="Match" asp-controller="Question" method="post">
+			<div class="mb-3">
+
+				<textarea name="editor" id="editor" rows="4" cols="4">
+					@if (ViewBag.AllText is not null)
+					{
+						@foreach (var question in ViewBag.AllText)
+						{
+							@Html.Raw(question)
+
+						<br>
+
+						<br>
+						}
+					}
+					</textarea>
+			</div>
+
+			<div class="text-right">
+				<button id="gonder" type="submit" class="btn btn-primary">
+					Save Questions
+					<i class="icon-paperplane ml-2"></i>
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+@*}*@
+
+@*<div id="dropDowns"></div>*@
+
+
+
+
+
+
+<div id="ASDdropDowns"></div>
+
+
+
+@*@Html.ActionLink("Click here", // <-- Link text
+	"PartialMatchingOutcomes",
+	"Question"
+	)*@
+
+@*<button id="loadPartialView">selam</button>*@
+
+
+<script type="text/javascript">
+
+
+		$(document).ready(function () {
+
+	@*	$("#docForm").submit(function(e){
+		e.preventDefault();
+		}
+	*@
+			var editor = CKEDITOR.replace( 'editor');
+			editor.config.height = 400;
+
+			let examId = parseInt(@ViewBag.ExamId);
+
+			//$("#gonder").click(function () {
+			//	$("#dropdowns").load(`/Question/Match`);
+			//});
+
+			//$("#ASD").click(function () {
+				
+			//	//$("#dropDowns").load(`/Question/PartialMatchingOutcomes/${examId}`);
+
+			//	var be = document.getelementbyıd("editor").val();
+			//	$.ajax({
+			//		type: "post",
+			//		url: "/Question/ASD",
+			//		data: {
+			//			ques: be
+			//		},
+			//		datatype: "text",
+			//		success: function (msg) {
+			//			console.log(msg);
+			//		},
+			//		error: function (req, status, error) {
+			//			console.log(msg);
+			//		}
+			//	});
+
+			//	$("#ASDdropDowns").load(`/Question/ASD`);
+
+			//});
+		});
+
+
+</script>
+
+@*<h1>Create</h1>
+
+	<h4>Question</h4>
+	<hr />
+	<div class="row">
+	<div class="col-md-4">
+	<form asp-action="Create">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<div class="form-group">
+	<label asp-for="WhichQuestion" class="control-label"></label>
+	<input asp-for="WhichQuestion" class="form-control" />
+	<span asp-validation-for="WhichQuestion" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+	<label asp-for="QuestionText" class="control-label"></label>
+	<input asp-for="QuestionText" class="form-control" />
+	<span asp-validation-for="QuestionText" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+	<label asp-for="MaxPoint" class="control-label"></label>
+	<input asp-for="MaxPoint" class="form-control" />
+	<span asp-validation-for="MaxPoint" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+	<label asp-for="ExamId" class="control-label"></label>
+	<select asp-for="ExamId" class ="form-control" asp-items="ViewBag.ExamId"></select>
+	</div>
+	<div class="form-group">
+	<label asp-for="CourseOutcomeId" class="control-label"></label>
+	<select asp-for="CourseOutcomeId" class ="form-control" asp-items="ViewBag.CourseOutcomeId"></select>
+	</div>
+	<div class="form-group">
+	<input type="submit" value="Create" class="btn btn-primary" />
+	</div>
+	</form>
+	</div>
+	</div>
+
+	<div>
+	<a asp-action="Index">Back to List</a>
+	</div>
+
+*@
+
+
+

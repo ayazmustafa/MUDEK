@@ -1,0 +1,75 @@
+﻿@model List<Mudek.Models.Point>
+
+@{
+    var students = ViewBag.Students;
+    var maxpts = ViewBag.MaxPts;
+    var a = 5;
+}
+
+@if (Model is not null)
+{
+    <div class="card mt-4 ml-5 mb-5 mr-5">
+        <div class="card-header">
+            <h5 class="card-title"><strong>Student Scores of @ViewBag.courseName</strong></h5>
+        </div>
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+            <div class="datatable-header">
+
+                <div class="dataTables_length" id="DataTables_Table_0_length">
+                </div>
+            </div>
+            <div class="datatable-scroll">
+                <form asp-action="SavePoints" asp-controller="Point" method="post" data-select2-id="44">
+                    <table class="table nowrap datatable-reorder dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr role="row">
+                                <th>Names</th>
+                                @for (var i = 1; i < ((Model.Count) / students.Count) + 1; i++)
+                                {
+                                    <th class="">
+                                        @i .Question / @maxpts[i] pts
+                                        @*<label class="col-fo	rm-label">@i .Question / @maxpts[i] pts</label>*@
+                                        @*<input type="text" class="col-lg-5 col-form-label"/>*@
+                                    </th>
+                                }
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in ViewBag.students)
+                            {
+                                <tr>
+                                    <th>@item.Name @item.LastName</th>
+                                    @for (var i = 0; i < ((Model.Count) / students.Count); i++)
+                                    {
+                                        <input asp-for="@Model[i].Id" type="hidden" class="col-lg-6 col-form-label" value="0" />
+                                        <input asp-for="@Model[i].QuestionId" type="hidden" class="col-lg-6 col-form-label" value="0" />
+                                        <input asp-for="@Model[i].StudentOpenedCourseId" type="hidden" class="col-lg-6 col-form-label" value="0" />
+                                        <td>
+                                            @*<input asp-for="@Model[i].Score" type="number" class="col-lg-6 col-form-label ml-1" value="0" />*@
+                                            <div class="input-group">
+                                                <input asp-for="@Model[i].Score" type="number" class="col-lg-6 ml-1 form-control" value="0">
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                    <div class="text-right mt-3">
+                        <button id="btnSubmit" type="submit" class="btn btn-primary">Save Student Scores <i class="icon-paperplane ml-2"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+}
+

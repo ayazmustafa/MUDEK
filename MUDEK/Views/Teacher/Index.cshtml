@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Mudek.Models.Exam>
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+@*<h1> MAIN PAGE </h1>
+	<h1>Welcome @User.Identity.Name</h1>
+	<ul>
+	@foreach (var c in User.Claims)
+	{
+	<li> @c.Value</li>
+	}
+	</ul>*@
+
+
+@*@foreach(var i in Model)
+	{
+	<h1>@i.Name</h1>
+	<h1>@i.Date</h1>
+	}
+*@
+
+
+
+<div class="card mt-4 ml-5 mb-5 mr-5">
+	<div class="card-header">
+		<h5 class="card-title"><strong>@ViewBag.CourseName Exams</strong></h5>
+	</div>
+
+
+
+	<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+		<div class="datatable-header">
+
+			<div class="dataTables_length" id="DataTables_Table_0_length">
+			</div>
+		</div>
+		<div class="datatable-scroll">
+			<table class="table datatable-reorder dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+				<thead>
+					<tr role="row">
+						<th>Exam Name</th>
+						<th>Date</th>
+						<th>Course Outcomes</th>
+						<th>Student Notes</th>
+						<th>Edit</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var exam in Model)
+					{
+						<tr class="odd">
+							<td class="sorting_1">@exam.Name</td>
+							<td>@exam.Date.ToShortDateString()</td>
+							<td><a asp-action="Create" asp-controller="Question" asp-route-id="@exam.Id"><span class="badge badge-info">CourseOutcomes</span></a></td>
+							<td><a asp-action="Index" asp-controller="Point" asp-route-id="@exam.Id"><span class="badge badge-info">StudentNotes</span></a></td>
+							<td><a asp-action="Edit" asp-controller="Exam" asp-route-id="@exam.Id"><span class="badge badge-info">Edit</span></a></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
